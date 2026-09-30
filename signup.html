@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account - GadgetGrub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#ff6b35;--accent-dark:#e0511f;--ink:#1f2430;--muted:#5c6470;
+    --bg:#faf7f2;--card:#ffffff;--line:#e9e2d8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+  header{border-bottom:1px solid var(--line);background:#ffffff;}
+  .nav{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;}
+  .nav a{color:var(--ink);text-decoration:none;font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;}
+  .nav a span{color:var(--accent);}
+  .back{font-size:0.85rem;color:var(--muted);text-decoration:none;font-family:'Inter',sans-serif;font-weight:500;}
+  .back:hover{color:var(--accent);}
+  main{max-width:420px;margin:0 auto;padding:56px 20px 80px;}
+  h1{font-family:'Fraunces',serif;font-size:1.7rem;margin-bottom:6px;}
+  .sub{color:var(--muted);font-size:0.95rem;margin-bottom:28px;}
+  form{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;}
+  label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;}
+  input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-family:'Inter',sans-serif;font-size:0.95rem;margin-bottom:16px;background:#fdfcf9;}
+  input:focus{outline:2px solid var(--accent);border-color:var(--accent);}
+  .btn{width:100%;background:var(--accent);color:#fff;font-weight:600;font-size:1rem;padding:13px;border:none;border-radius:10px;cursor:pointer;}
+  .btn:hover{background:var(--accent-dark);}
+  .alt{text-align:center;margin-top:20px;font-size:0.9rem;color:var(--muted);}
+  .alt a{color:var(--accent);font-weight:600;text-decoration:none;}
+  .fine{font-size:0.75rem;color:var(--muted);text-align:center;margin-top:14px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html">Gadget<span>Grub</span></a>
+    <a class="back" href="index.html">&larr; Back to store</a>
+  </div>
+</header>
+
+<main>
+  <h1>Create your account</h1>
+  <p class="sub">Check out faster, save your details, track every order.</p>
+
+  <p class="err" id="errmsg" style="display:none;background:#fdecec;border:1px solid #f5c2c4;color:#b3261e;padding:10px 14px;border-radius:10px;font-size:0.85rem;margin-bottom:20px;">Email already in use. Log in instead.</p>
+
+  <form action="/api/signup" method="POST">
+    <label for="name">Full name</label>
+    <input type="text" id="name" name="name" placeholder="Your name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="you@email.com" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="At least 8 characters" minlength="8" required>
+
+    <button class="btn" type="submit">Create Account</button>
+    <p class="fine">Your password is stored encrypted, never as plain text.</p>
+  </form>
+
+  <p class="alt">Already have an account? <a href="login.html">Log in</a></p>
+<script>
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('error') === 'exists') document.getElementById('errmsg').style.display = 'block';
+</script>
+
+</main>
+
+</body>
+</html>
