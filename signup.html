@@ -39,6 +39,9 @@
   .alt{text-align:center;margin-top:20px;font-size:0.9rem;color:var(--muted);}
   .alt a{color:var(--accent);font-weight:600;text-decoration:none;}
   .fine{font-size:0.75rem;color:var(--muted);text-align:center;margin-top:14px;}
+  .tg-float{position:fixed;right:20px;bottom:20px;width:54px;height:54px;border-radius:50%;background:#229ED9;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(34,158,217,0.45);transition:transform .2s;z-index:90;}
+  .tg-float:hover{transform:scale(1.1);}
+  .tg-float svg{width:28px;height:28px;fill:#fff;}
 </style>
 </head>
 <body>
@@ -68,6 +71,9 @@
 
     <label for="password">Password</label>
     <input type="password" id="password" name="password" placeholder="At least 8 characters" minlength="8" required>
+
+    <label for="phone">Phone <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="tel" id="phone" name="phone" placeholder="+1 555 123 4567" autocomplete="tel">
 
     <button class="btn" type="submit">Create Account</button>
     <p class="fine">Your password is stored encrypted, never as plain text.</p>
