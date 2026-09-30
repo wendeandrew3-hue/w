@@ -99,6 +99,9 @@
   footer{border-top:1px solid var(--line);background:var(--footer-bg);}
   .foot-inner{max-width:1080px;margin:0 auto;padding:32px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;color:var(--muted);font-size:0.85rem;}
   .foot-inner a{color:var(--accent);text-decoration:none;}
+  .tg-float{position:fixed;right:20px;bottom:20px;width:54px;height:54px;border-radius:50%;background:#229ED9;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(34,158,217,0.45);transition:transform .2s;z-index:90;}
+  .tg-float:hover{transform:scale(1.1);}
+  .tg-float svg{width:28px;height:28px;fill:#fff;}
 </style>
 </head>
 <body>
@@ -213,6 +216,10 @@
     <a class="btn" href="#products">Shop Bestsellers</a>
   </section>
 </main>
+
+<a class="tg-float" href="https://t.me/IREDROX" target="_blank" rel="noopener" aria-label="Contact us on Telegram">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.54-1.1.54-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.72l21.26-8.2c1.1-.4 2.07.24 1.54 2.01z"/></svg>
+</a>
 
 <footer>
   <div class="foot-inner">
