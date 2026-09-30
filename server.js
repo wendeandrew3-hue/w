@@ -68,7 +68,7 @@ function currentUser(req) {
 
 // ---------- auth routes ----------
 app.post('/api/signup', (req, res) => {
-  const { name, email, password } = req.body || {};
+  const { name, email, password, phone } = req.body || {};
   if (!name || !email || !password || password.length < 8) return res.redirect('/signup.html?error=1');
   const db = loadDB();
   if (db.users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
@@ -78,6 +78,7 @@ app.post('/api/signup', (req, res) => {
     id: crypto.randomUUID(),
     name: String(name).slice(0, 80),
     email: String(email).slice(0, 120).toLowerCase(),
+    phone: phone ? String(phone).trim().slice(0, 20) : '',
     password: hashPassword(password),
     created: new Date().toISOString()
   };
@@ -106,7 +107,7 @@ app.post('/api/logout', (req, res) => {
 app.get('/api/me', (req, res) => {
   const user = currentUser(req);
   if (!user) return res.status(401).json({ error: 'not logged in' });
-  res.json({ name: user.name, email: user.email });
+  res.json({ name: user.name, email: user.email, phone: user.phone || '' });
 });
 
 // payment placeholder hook - your checkout code mounts here later
