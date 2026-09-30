@@ -17,6 +17,17 @@
     --bg:#faf7f2;
     --card:#ffffff;
     --line:#e9e2d8;
+    --header-bg:rgba(250,247,242,0.95);
+    --footer-bg:#f3efe8;
+  }
+  [data-theme=dark]{
+    --ink:#eceef2;
+    --muted:#9aa1ad;
+    --bg:#14161c;
+    --card:#1d2028;
+    --line:#2c313d;
+    --header-bg:rgba(20,22,28,0.95);
+    --footer-bg:#101218;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -25,7 +36,7 @@
   img{display:block;max-width:100%;}
 
   /* Header */
-  header{position:sticky;top:0;z-index:50;background:rgba(250,247,242,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
   .nav{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
   .logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;color:var(--ink);text-decoration:none;}
   .logo span{color:var(--accent);}
@@ -34,6 +45,12 @@
 .nav-right{display:flex;align-items:center;gap:18px;}
   .nav-login{color:var(--ink);font-weight:600;font-size:0.9rem;text-decoration:none;}
   .nav-login:hover{color:var(--accent);}
+  .nav-cart{position:relative;color:var(--ink);text-decoration:none;font-size:1.15rem;line-height:1;}
+  .cart-count{position:absolute;top:-7px;right:-10px;background:var(--accent);color:#fff;font-size:0.7rem;font-weight:700;min-width:17px;height:17px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;}
+  .theme-toggle{background:var(--card);border:1px solid var(--line);border-radius:999px;width:38px;height:38px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+  .theme-toggle:hover{transform:scale(1.08);}
+  .added-note{font-size:0.78rem;color:#2e7d32;font-weight:600;margin-top:6px;display:none;}
+  [data-theme=dark] .added-note{color:#7fd88f;}
 
 
   /* Hero */
@@ -79,7 +96,7 @@
   .final-cta p{color:var(--muted);margin-bottom:28px;}
 
   /* Footer */
-  footer{border-top:1px solid var(--line);background:#f3efe8;}
+  footer{border-top:1px solid var(--line);background:var(--footer-bg);}
   .foot-inner{max-width:1080px;margin:0 auto;padding:32px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;color:var(--muted);font-size:0.85rem;}
   .foot-inner a{color:var(--accent);text-decoration:none;}
 </style>
@@ -90,6 +107,8 @@
   <nav class="nav">
     <a class="logo" href="#">Gadget<span>Grub</span></a>
     <div class="nav-right">
+    <button class="theme-toggle" type="button">&#9789;</button>
+    <a class="nav-cart" href="account.html#cart" aria-label="Your cart">&#128722;<span class="cart-count"></span></a>
     <a class="nav-login" href="login.html">Log in</a>
     <a class="nav-cta" href="#products">Shop Now</a>
   </div>
@@ -116,7 +135,8 @@
           <h3>Mini Waffle Maker</h3>
           <p class="desc">Golden waffles in 4 minutes. Non-stick, tiny footprint, perfect for apartments and dorms.</p>
           <div class="price">$29.99<small>$45.00</small></div>
-          <a class="buy" href="checkout.html">Buy Now</a>
+          <button class="buy add-to-cart" type="button" data-name="Mini Waffle Maker" data-price="29.99">Add to Cart</button>
+          <span class="added-note">Added &#10003;</span>
         </div>
       </article>
 
@@ -126,7 +146,8 @@
           <h3>Portable Blender Bottle</h3>
           <p class="desc">USB rechargeable. Blend your smoothie, screw on the lid, take it with you.</p>
           <div class="price">$24.99<small>$40.00</small></div>
-          <a class="buy" href="checkout.html">Buy Now</a>
+          <button class="buy add-to-cart" type="button" data-name="Portable Blender Bottle" data-price="24.99">Add to Cart</button>
+          <span class="added-note">Added &#10003;</span>
         </div>
       </article>
 
@@ -136,7 +157,8 @@
           <h3>Compact Air Fryer</h3>
           <p class="desc">Crispy food, little to no oil. Small enough for any countertop, big enough for real meals.</p>
           <div class="price">$49.99<small>$75.00</small></div>
-          <a class="buy" href="checkout.html">Buy Now</a>
+          <button class="buy add-to-cart" type="button" data-name="Compact Air Fryer" data-price="49.99">Add to Cart</button>
+          <span class="added-note">Added &#10003;</span>
         </div>
       </article>
 
@@ -146,7 +168,8 @@
           <h3>Single-Serve Coffee Maker</h3>
           <p class="desc">One button, one perfect cup, 90 seconds. Your café routine without the café line.</p>
           <div class="price">$39.99<small>$60.00</small></div>
-          <a class="buy" href="checkout.html">Buy Now</a>
+          <button class="buy add-to-cart" type="button" data-name="Single-Serve Coffee Maker" data-price="39.99">Add to Cart</button>
+          <span class="added-note">Added &#10003;</span>
         </div>
       </article>
 
@@ -156,7 +179,8 @@
           <h3>Electric Milk Frother</h3>
           <p class="desc">Barista-level foam in 20 seconds. Latte, cappuccino, matcha, all at home.</p>
           <div class="price">$12.99<small>$22.00</small></div>
-          <a class="buy" href="checkout.html">Buy Now</a>
+          <button class="buy add-to-cart" type="button" data-name="Electric Milk Frother" data-price="12.99">Add to Cart</button>
+          <span class="added-note">Added &#10003;</span>
         </div>
       </article>
 
@@ -166,7 +190,8 @@
           <h3>Foldable Travel Kettle</h3>
           <p class="desc">Collapses flat to fit in any bag. Hot water anywhere: office, road trip, hotel room.</p>
           <div class="price">$34.99<small>$55.00</small></div>
-          <a class="buy" href="checkout.html">Buy Now</a>
+          <button class="buy add-to-cart" type="button" data-name="Foldable Travel Kettle" data-price="34.99">Add to Cart</button>
+          <span class="added-note">Added &#10003;</span>
         </div>
       </article>
 
@@ -195,5 +220,18 @@
   </div>
 </footer>
 
+<script src="theme.js"></script>
+<script src="cart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.add-to-cart').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      GGCart.add(btn.dataset.name, parseFloat(btn.dataset.price));
+      var note = btn.parentElement.querySelector('.added-note');
+      if (note) { note.style.display = 'block'; setTimeout(function(){ note.style.display='none'; }, 1600); }
+    });
+  });
+});
+</script>
 </body>
 </html>
