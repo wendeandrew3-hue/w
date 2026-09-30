@@ -6,66 +6,165 @@
 <title>Checkout - GadgetGrub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --accent:#ff6b35;
-    --accent-dark:#e0511f;
-    --ink:#1f2430;
-    --muted:#5c6470;
-    --bg:#faf7f2;
-    --line:#e9e2d8;
+    --accent:#ff6b35;--accent-dark:#e0511f;--ink:#1f2430;--muted:#5c6470;
+    --bg:#faf7f2;--card:#ffffff;--line:#e9e2d8;
+    --header-bg:#ffffff;--footer-bg:#f3efe8;
+  }
+  [data-theme=dark]{
+    --ink:#eceef2;--muted:#9aa1ad;--bg:#14161c;--card:#1d2028;--line:#2c313d;
+    --header-bg:#1d2028;--footer-bg:#101218;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
-  header{border-bottom:1px solid var(--line);background:#ffffff;}
-  .nav{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;}
-  .nav a{color:var(--ink);text-decoration:none;font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;}
-  .nav a span{color:var(--accent);}
+  header{border-bottom:1px solid var(--line);background:var(--header-bg);}
+  .nav{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;}
+  .nav a.logo{color:var(--ink);text-decoration:none;font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;}
+  .nav a.logo span{color:var(--accent);}
+  .nav-right{display:flex;align-items:center;gap:16px;}
   .back{font-size:0.85rem;color:var(--muted);text-decoration:none;font-family:'Inter',sans-serif;font-weight:500;}
   .back:hover{color:var(--accent);}
-  main{max-width:640px;margin:0 auto;padding:48px 20px 80px;}
+  .nav-cart{position:relative;color:var(--ink);text-decoration:none;font-size:1.15rem;line-height:1;}
+  .cart-count{position:absolute;top:-7px;right:-10px;background:var(--accent);color:#fff;font-size:0.7rem;font-weight:700;min-width:17px;height:17px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;}
+  .theme-toggle{background:var(--card);border:1px solid var(--line);border-radius:999px;width:38px;height:38px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  main{max-width:760px;margin:0 auto;padding:48px 20px 80px;}
   h1{font-family:'Fraunces',serif;font-size:1.8rem;margin-bottom:8px;}
-  .sub{color:var(--muted);margin-bottom:36px;}
-
-  /* ================================================================
-     PAYMENT SECTION - YOUR CODE GOES HERE
-     Sir Drew: paste your payment embed / button / form code below,
-     inside this .pay-zone box. Everything else on this page stays.
-     ================================================================ */
-  .pay-zone{
-    border:2px dashed var(--line);
-    border-radius:16px;
-    padding:48px 24px;
-    text-align:center;
-    color:var(--muted);
-  }
-  .pay-zone strong{display:block;font-size:1rem;color:var(--ink);margin-bottom:4px;}
-
+  .sub{color:var(--muted);margin-bottom:32px;}
+  h2{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:14px;}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;margin-bottom:28px;}
+  .summary-item{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:0.95rem;}
+  .summary-item:last-of-type{border-bottom:none;}
+  .summary-item .qty-pill{color:var(--muted);font-size:0.85rem;margin-left:8px;}
+  .summary-total{display:flex;justify-content:space-between;font-weight:700;font-size:1.05rem;padding-top:14px;}
+  .pay-opt{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px;cursor:pointer;transition:border-color .2s;}
+  .pay-opt:hover{border-color:var(--accent);}
+  .pay-opt.selected{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,0.15);}
+  .pay-opt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .pay-opt-title{font-weight:700;font-size:1rem;display:flex;align-items:center;gap:10px;}
+  .pay-opt-sub{color:var(--muted);font-size:0.85rem;margin-top:4px;}
+  .radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;}
+  .pay-opt.selected .radio{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 4px var(--card);}
+  .badges{display:flex;gap:6px;flex-wrap:wrap;}
+  .badge{font-size:0.7rem;font-weight:700;letter-spacing:0.04em;padding:4px 9px;border-radius:6px;color:#fff;background:#3a4050;}
+  .badge.visa{background:#1a1f71;} .badge.mc{background:#eb001b;} .badge.amex{background:#0070ce;}
+  .apple-pay{background:#000;color:#fff;font-weight:600;font-size:1rem;padding:14px 24px;border-radius:10px;border:none;cursor:pointer;display:none;width:100%;margin-top:6px;}
+  .card-form{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);}
+  .card-form label{display:block;font-size:0.8rem;font-weight:600;margin:10px 0 6px;}
+  .card-form input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-family:'Inter',sans-serif;font-size:0.95rem;background:var(--bg);color:var(--ink);}
+  .card-form input:focus{outline:2px solid var(--accent);border-color:var(--accent);}
+  .card-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .crypto-block{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);}
+  .coin{margin-bottom:16px;}
+  .coin-label{font-weight:700;font-size:0.9rem;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  .coin-addr{display:flex;gap:8px;align-items:stretch;}
+  .coin-addr code{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:0.8rem;word-break:break-all;color:var(--ink);}
+  .copy-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0 16px;font-weight:600;font-size:0.85rem;cursor:pointer;flex-shrink:0;}
+  .pay-cta{width:100%;background:var(--accent);color:#fff;font-weight:700;font-size:1.05rem;padding:15px;border:none;border-radius:12px;cursor:pointer;margin-top:10px;display:none;}
+  .pay-cta:hover{background:var(--accent-dark);}
+  .note{font-size:0.78rem;color:var(--muted);margin-top:14px;text-align:center;}
+  .empty-cart{color:var(--muted);text-align:center;padding:14px 0;}
+  .empty-cart a{color:var(--accent);font-weight:600;}
   footer{border-top:1px solid var(--line);}
-  .foot-inner{max-width:640px;margin:0 auto;padding:20px;color:var(--muted);font-size:0.85rem;text-align:center;}
+  .foot-inner{max-width:760px;margin:0 auto;padding:20px;color:var(--muted);font-size:0.85rem;text-align:center;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="nav">
-    <a href="index.html">Gadget<span>Grub</span></a>
-    <a class="back" href="index.html">&larr; Back to store</a>
+    <a class="logo" href="index.html">Gadget<span>Grub</span></a>
+    <div class="nav-right">
+      <button class="theme-toggle" type="button">&#9789;</button>
+      <a class="nav-cart" href="account.html#cart" aria-label="Your cart">&#128722;<span class="cart-count"></span></a>
+      <a class="back" href="index.html">&larr; Back to store</a>
+    </div>
   </div>
 </header>
 
 <main>
   <h1>Checkout</h1>
-  <p class="sub">Almost there. Complete your order below.</p>
+  <p class="sub">Review your order, then pick how you want to pay.</p>
 
-  <!-- PAYMENT CODE GOES HERE -->
-  <div class="pay-zone">
-    <strong>Payment section</strong>
-    Paste your payment code in this box.
+  <div class="box">
+    <h2>Order Summary</h2>
+    <div id="summary"></div>
   </div>
-  <!-- END PAYMENT SECTION -->
 
+  <div class="box">
+    <h2>Payment Method</h2>
+
+    <button class="pay-opt" id="opt-applepay" type="button">
+      <div class="pay-opt-head">
+        <span class="pay-opt-title">&#63743; Apple&nbsp;Pay</span>
+        <span class="radio"></span>
+      </div>
+      <p class="pay-opt-sub">Fastest option. One tap, done.</p>
+    </button>
+
+    <button class="pay-opt" id="opt-card" type="button">
+      <div class="pay-opt-head">
+        <span class="pay-opt-title">Card</span>
+        <span class="badges"><span class="badge visa">VISA</span><span class="badge mc">Mastercard</span><span class="badge amex">AMEX</span></span>
+      </div>
+      <p class="pay-opt-sub">Pay with Visa, Mastercard or American Express.</p>
+    </button>
+
+    <button class="pay-opt" id="opt-crypto" type="button">
+      <div class="pay-opt-head">
+        <span class="pay-opt-title">Crypto</span>
+        <span class="badges"><span class="badge">USDT</span><span class="badge">Bitcoin</span></span>
+      </div>
+      <p class="pay-opt-sub">Pay with USDT or BTC. Send from any wallet or exchange.</p>
+    </button>
+
+    <!-- Apple Pay panel -->
+    <div class="apple-pay" id="panel-applepay">
+      <!-- FILL IN: Apple Pay link goes in the href below -->
+      <a id="applepay-link" href="#" style="display:block;width:100%;text-align:center;">&#63743;&nbsp;Pay with Apple&nbsp;Pay</a>
+    </div>
+
+    <!-- Card panel -->
+    <form class="card-form" id="panel-card">
+      <label for="cnum">Card number</label>
+      <input id="cnum" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="off">
+      <div class="card-row">
+        <div>
+          <label for="cexp">Expiry</label>
+          <input id="cexp" type="text" placeholder="MM / YY" autocomplete="off">
+        </div>
+        <div>
+          <label for="ccvc">CVC</label>
+          <input id="ccvc" type="text" inputmode="numeric" placeholder="123" autocomplete="off">
+        </div>
+      </div>
+      <button class="pay-cta" type="submit">Pay Now</button>
+      <p class="note">Card details are never stored on this site.</p>
+    </form>
+
+    <!-- Crypto panel -->
+    <div class="crypto-block" id="panel-crypto">
+      <div class="coin">
+        <div class="coin-label">&#8383; Bitcoin (BTC)</div>
+        <div class="coin-addr">
+          <code id="btc-addr">FILL IN BTC ADDRESS</code>
+          <button class="copy-btn" type="button" data-copy="btc-addr">Copy</button>
+        </div>
+      </div>
+      <div class="coin">
+        <div class="coin-label">&#8383; Tether (USDT)</div>
+        <div class="coin-addr">
+          <code id="usdt-addr">FILL IN USDT ADDRESS</code>
+          <button class="copy-btn" type="button" data-copy="usdt-addr">Copy</button>
+        </div>
+      </div>
+      <button class="pay-cta" type="button" id="crypto-done">I've Sent the Payment</button>
+      <p class="note">Your order is confirmed once the payment lands on chain.</p>
+    </div>
+
+    <p class="note">Questions before paying? Email us, we answer fast.</p>
+  </div>
 </main>
 
 <footer>
@@ -73,6 +172,61 @@
     <p>(c) 2026 GadgetGrub. All rights reserved.</p>
   </div>
 </footer>
+
+<script src="theme.js"></script>
+<script src="cart.js"></script>
+<script>
+  function renderSummary() {
+    var cart = GGCart.get();
+    var wrap = document.getElementById('summary');
+    if (cart.length === 0) {
+      wrap.innerHTML = '<p class="empty-cart">Your cart is empty. <a href="index.html#products">Add a gadget first</a></p>';
+      return false;
+    }
+    var html = '';
+    cart.forEach(function (i) {
+      html += '<div class="summary-item"><span>' + i.name + '<span class="qty-pill">x' + i.qty + '</span></span><span>$' + (i.price * i.qty).toFixed(2) + '</span></div>';
+    });
+    html += '<div class="summary-total"><span>Total</span><span>$' + GGCart.total().toFixed(2) + '</span></div>';
+    wrap.innerHTML = html;
+    return true;
+  }
+
+  var panels = { 'opt-applepay': 'panel-applepay', 'opt-card': 'panel-card', 'opt-crypto': 'panel-crypto' };
+  Object.keys(panels).forEach(function (optId) {
+    document.getElementById(optId).addEventListener('click', function () {
+      var wasSelected = document.getElementById(optId).classList.contains('selected');
+      document.querySelectorAll('.pay-opt').forEach(function (o) { o.classList.remove('selected'); });
+      Object.values(panels).forEach(function (p) {
+        var el = document.getElementById(p);
+        el.style.display = 'none';
+        el.classList.remove('visible');
+      });
+      if (!wasSelected) {
+        document.getElementById(optId).classList.add('selected');
+        var panel = document.getElementById(panels[optId]);
+        panel.style.display = 'block';
+      }
+    });
+  });
+
+  document.querySelectorAll('.copy-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent).then(function () {
+        var old = b.textContent;
+        b.textContent = 'Copied';
+        setTimeout(function () { b.textContent = old; }, 1500);
+      });
+    });
+  });
+
+  document.getElementById('panel-card').addEventListener('submit', function (e) {
+    e.preventDefault();
+    alert('Card processing goes live once the payment processor is connected. FILL IN needed.');
+  });
+
+  document.addEventListener('DOMContentLoaded', renderSummary);
+</script>
 
 </body>
 </html>
