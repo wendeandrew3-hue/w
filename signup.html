@@ -11,15 +11,22 @@
   :root{
     --accent:#ff6b35;--accent-dark:#e0511f;--ink:#1f2430;--muted:#5c6470;
     --bg:#faf7f2;--card:#ffffff;--line:#e9e2d8;
+    --header-bg:#ffffff;
+  }
+  [data-theme=dark]{
+    --ink:#eceef2;--muted:#9aa1ad;--bg:#14161c;--card:#1d2028;--line:#2c313d;
+    --header-bg:#1d2028;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
-  header{border-bottom:1px solid var(--line);background:#ffffff;}
+  header{border-bottom:1px solid var(--line);background:var(--header-bg);}
   .nav{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;}
   .nav a{color:var(--ink);text-decoration:none;font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;}
   .nav a span{color:var(--accent);}
   .back{font-size:0.85rem;color:var(--muted);text-decoration:none;font-family:'Inter',sans-serif;font-weight:500;}
   .back:hover{color:var(--accent);}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .theme-toggle{background:var(--card);border:1px solid var(--line);border-radius:999px;width:38px;height:38px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
   main{max-width:420px;margin:0 auto;padding:56px 20px 80px;}
   h1{font-family:'Fraunces',serif;font-size:1.7rem;margin-bottom:6px;}
   .sub{color:var(--muted);font-size:0.95rem;margin-bottom:28px;}
@@ -39,7 +46,10 @@
 <header>
   <div class="nav">
     <a href="index.html">Gadget<span>Grub</span></a>
-    <a class="back" href="index.html">&larr; Back to store</a>
+    <div class="nav-right">
+      <button class="theme-toggle" type="button">&#9789;</button>
+      <a class="back" href="index.html">&larr; Back to store</a>
+    </div>
   </div>
 </header>
 
@@ -71,5 +81,6 @@
 
 </main>
 
+<script src="theme.js"></script>
 </body>
 </html>
