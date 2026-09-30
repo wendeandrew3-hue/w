@@ -12,6 +12,7 @@ const PROD = process.env.NODE_ENV === 'production';
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'users.json');
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname));
 
@@ -95,6 +96,9 @@ app.post('/api/login', (req, res) => {
   if (!user || !verifyPassword(String(password || ''), user.password)) {
     return res.redirect('/login.html?error=1');
   }
+  user.last_login = new Date().toISOString();
+  db.users = db.users.map(u => u.id === user.id ? user : u);
+  saveDB(db);
   setSession(res, user);
   res.redirect('/account.html');
 });
@@ -108,6 +112,70 @@ app.get('/api/me', (req, res) => {
   const user = currentUser(req);
   if (!user) return res.status(401).json({ error: 'not logged in' });
   res.json({ name: user.name, email: user.email, phone: user.phone || '' });
+});
+
+// ---------- checkout (test mode) ----------
+// Records what the site relayed: brand + last4 only. The full card number
+// never leaves the browser and the CVC is never transmitted at all.
+app.post('/api/checkout', (req, res) => {
+  const b = req.body || {};
+  const digits = (s) => String(s || '').replace(/\D/g, '');
+  const brandOf = (d) => d.startsWith('4') ? 'Visa' : d.startsWith('5') ? 'Mastercard' : d.startsWith('3') ? 'Amex' : d.startsWith('6') ? 'Discover' : 'Card';
+  // defense in depth: if a full number somehow arrives, mask it here too
+  let card = { brand: 'Card', last4: '', exp: '' };
+  if (b.card && typeof b.card === 'object') {
+    const d = digits(b.card.last4);
+    card = { brand: String(b.card.brand || 'Card').slice(0, 12), last4: d.slice(-4), exp: String(b.card.exp || '').slice(0, 7) };
+  }
+  if (!card.last4 && b.cardNumber) {
+    const d = digits(b.cardNumber);
+    card = { brand: brandOf(d), last4: d.slice(-4), exp: String(b.card.exp || '').slice(0, 7) };
+  }
+  const order = {
+    id: 'ORD-' + Date.now().toString(36).toUpperCase(),
+    date: new Date().toISOString(),
+    email: (req.user && req.user.email) || (b.email ? String(b.email).slice(0, 120) : 'guest'),
+    name: String(b.name || '').slice(0, 80),
+    amount: Math.round((Number(b.amount) || 0) * 100), // cents
+    items: Array.isArray(b.items) ? b.items.slice(0, 50) : [],
+    shipping: {
+      name: String((b.shipping || {}).name || '').slice(0, 80),
+      street: String((b.shipping || {}).street || '').slice(0, 120),
+      city: String((b.shipping || {}).city || '').slice(0, 60),
+      state: String((b.shipping || {}).state || '').slice(0, 20),
+      zip: String((b.shipping || {}).zip || '').slice(0, 12)
+    },
+    billing: {
+      name: String((b.billing || {}).name || '').slice(0, 80),
+      street: String((b.billing || {}).street || '').slice(0, 120),
+      city: String((b.billing || {}).city || '').slice(0, 60),
+      state: String((b.billing || {}).state || '').slice(0, 20),
+      zip: String((b.billing || {}).zip || '').slice(0, 12)
+    },
+    card
+  };
+  const db = loadDB();
+  db.orders = db.orders || [];
+  db.orders.push(order);
+  saveDB(db);
+  res.json({ ok: true, orderId: order.id });
+});
+
+// ---------- admin ----------
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'gadget-admin';
+
+app.post('/api/admin/users', (req, res) => {
+  const { password } = req.body || {};
+  if (password !== ADMIN_PASSWORD) return res.status(401).json({ error: 'wrong password' });
+  const db = loadDB();
+  res.json({
+    users: db.users.map(u => ({
+      name: u.name, email: u.email, phone: u.phone || '',
+      joined: u.created || '', last_login: u.last_login || 'never'
+    })),
+    payments: db.payments || [], // FILL IN: payment processor feeds this once connected
+    orders: db.orders || []
+  });
 });
 
 // payment placeholder hook - your checkout code mounts here later
