@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account - GadgetGrub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#ff6b35;--accent-dark:#e0511f;--ink:#1f2430;--muted:#5c6470;
+    --bg:#faf7f2;--card:#ffffff;--line:#e9e2d8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+  header{border-bottom:1px solid var(--line);background:#ffffff;}
+  .nav{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;}
+  .nav a{color:var(--ink);text-decoration:none;font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;}
+  .nav a span{color:var(--accent);}
+  .back{font-size:0.85rem;color:var(--muted);text-decoration:none;font-family:'Inter',sans-serif;font-weight:500;}
+  .back:hover{color:var(--accent);}
+  main{max-width:520px;margin:0 auto;padding:56px 20px 80px;}
+  h1{font-family:'Fraunces',serif;font-size:1.7rem;margin-bottom:6px;}
+  .sub{color:var(--muted);font-size:0.95rem;margin-bottom:28px;}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;}
+  .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:0.95rem;}
+  .row:last-of-type{border-bottom:none;}
+  .row span:first-child{color:var(--muted);}
+  .actions{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:600;font-size:0.95rem;padding:12px 22px;border:none;border-radius:10px;text-decoration:none;cursor:pointer;}
+  .btn:hover{background:var(--accent-dark);}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html">Gadget<span>Grub</span></a>
+    <a class="back" href="index.html">&larr; Back to store</a>
+  </div>
+</header>
+
+<main>
+  <h1 id="greeting">My Account</h1>
+  <p class="sub">Your details and orders, all in one place.</p>
+
+  <div class="box">
+    <div class="row"><span>Name</span><span id="name">Loading...</span></div>
+    <div class="row"><span>Email</span><span id="email">Loading...</span></div>
+    <div class="row"><span>Orders</span><span>None yet</span></div>
+    <div class="actions">
+      <a class="btn" href="index.html#products">Continue Shopping</a>
+      <form action="/api/logout" method="POST" style="display:inline;">
+        <button class="btn btn-ghost" type="submit">Log Out</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<script>
+  fetch('/api/me')
+    .then(r => { if (!r.ok) window.location.href = 'login.html'; return r.json(); })
+    .then(user => {
+      document.getElementById('greeting').textContent = 'Hi, ' + user.name.split(' ')[0];
+      document.getElementById('name').textContent = user.name;
+      document.getElementById('email').textContent = user.email;
+    })
+    .catch(() => window.location.href = 'login.html');
+</script>
+
+</body>
+</html>
