@@ -1,0 +1,15 @@
+{
+  "name": "gadgetgrub",
+  "version": "1.0.0",
+  "description": "GadgetGrub kitchen gadget store with accounts",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
