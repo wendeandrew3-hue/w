@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GadgetGrub - Small Kitchen Upgrades</title>
+<meta name="description" content="Smart little kitchen upgrades. Waffle makers, portable blenders, compact air fryers and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#ff6b35;
+    --accent-dark:#e0511f;
+    --ink:#1f2430;
+    --muted:#5c6470;
+    --bg:#faf7f2;
+    --card:#ffffff;
+    --line:#e9e2d8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+  h1,h2,h3{font-family:'Fraunces',serif;line-height:1.15;}
+  img{display:block;max-width:100%;}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:50;background:rgba(250,247,242,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+  .logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;color:var(--ink);text-decoration:none;}
+  .logo span{color:var(--accent);}
+  .nav-cta{background:var(--accent);color:#fff;font-weight:600;font-size:0.9rem;padding:10px 18px;border-radius:999px;text-decoration:none;transition:background .2s;}
+  .nav-cta:hover{background:var(--accent-dark);}
+.nav-right{display:flex;align-items:center;gap:18px;}
+  .nav-login{color:var(--ink);font-weight:600;font-size:0.9rem;text-decoration:none;}
+  .nav-login:hover{color:var(--accent);}
+
+
+  /* Hero */
+  .hero{
+    background:
+      linear-gradient(rgba(28,24,20,0.55), rgba(28,24,20,0.70)),
+      url('https://media.base44.com/images/public/6abb9d8658ca4f3d10f85c7a/0cf9d94fd_generated_image.png') center 60%/cover no-repeat;
+    color:#fff;
+    padding:96px 20px 104px;
+    text-align:center;
+  }
+  .kicker{display:inline-block;font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#ffb899;margin-bottom:14px;}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:700;margin-bottom:16px;}
+  .hero p{color:#eee9e0;font-size:1.1rem;max-width:520px;margin:0 auto 28px;}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:600;font-size:1rem;padding:15px 34px;border-radius:999px;text-decoration:none;transition:background .2s;}
+  .btn:hover{background:var(--accent-dark);}
+
+  /* Products */
+  .section{max-width:1080px;margin:0 auto;padding:24px 20px 64px;}
+  .section h2{font-size:1.7rem;text-align:center;margin-bottom:8px;}
+  .section-sub{text-align:center;color:var(--muted);margin-bottom:36px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(31,36,48,0.10);}
+  .card img{width:100%;aspect-ratio:1;object-fit:cover;background:#f0ede7;}
+  .card-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .card h3{font-size:1.05rem;font-weight:600;font-family:'Inter',sans-serif;}
+  .card p.desc{color:var(--muted);font-size:0.9rem;flex:1;}
+  .price{font-weight:700;font-size:1.15rem;color:var(--ink);}
+  .price small{color:var(--muted);font-weight:500;text-decoration:line-through;margin-left:8px;font-size:0.85rem;}
+  .buy{margin-top:6px;background:var(--accent);color:#fff;text-align:center;font-weight:600;padding:12px;border-radius:10px;text-decoration:none;transition:background .2s;}
+  .buy:hover{background:var(--accent-dark);}
+
+  /* Why strip */
+  .why{background:var(--ink);color:#fff;padding:56px 20px;}
+  .why-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:28px;text-align:center;}
+  .why h3{font-family:'Inter',sans-serif;font-size:1rem;font-weight:600;margin-bottom:6px;color:#ffb899;}
+  .why p{font-size:0.9rem;color:#c8ccd6;}
+
+  /* CTA */
+  .final-cta{max-width:720px;margin:0 auto;padding:72px 20px;text-align:center;}
+  .final-cta h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:12px;}
+  .final-cta p{color:var(--muted);margin-bottom:28px;}
+
+  /* Footer */
+  footer{border-top:1px solid var(--line);background:#f3efe8;}
+  .foot-inner{max-width:1080px;margin:0 auto;padding:32px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;color:var(--muted);font-size:0.85rem;}
+  .foot-inner a{color:var(--accent);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a class="logo" href="#">Gadget<span>Grub</span></a>
+    <div class="nav-right">
+    <a class="nav-login" href="login.html">Log in</a>
+    <a class="nav-cta" href="#products">Shop Now</a>
+  </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <span class="kicker">Smart little upgrades</span>
+    <h1>Small kitchen gadgets. Big everyday difference.</h1>
+    <p>Hand-picked kitchen upgrades that save counter space, save time, and make cooking the fun part of your day.</p>
+    <a class="btn" href="#products">See the Gadgets</a>
+  </section>
+
+  <section class="section" id="products">
+    <h2>Our Bestsellers</h2>
+    <p class="section-sub">Free US shipping on every order</p>
+    <div class="grid">
+
+      <article class="card">
+        <img src="https://media.base44.com/images/public/6abb9d8658ca4f3d10f85c7a/e107e8c3c_generated_image.png" alt="Mini waffle maker">
+        <div class="card-body">
+          <h3>Mini Waffle Maker</h3>
+          <p class="desc">Golden waffles in 4 minutes. Non-stick, tiny footprint, perfect for apartments and dorms.</p>
+          <div class="price">$29.99<small>$45.00</small></div>
+          <a class="buy" href="checkout.html">Buy Now</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://media.base44.com/images/public/6abb9d8658ca4f3d10f85c7a/4bc54e659_generated_image.png" alt="Portable blender bottle">
+        <div class="card-body">
+          <h3>Portable Blender Bottle</h3>
+          <p class="desc">USB rechargeable. Blend your smoothie, screw on the lid, take it with you.</p>
+          <div class="price">$24.99<small>$40.00</small></div>
+          <a class="buy" href="checkout.html">Buy Now</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://media.base44.com/images/public/6abb9d8658ca4f3d10f85c7a/671a79b89_generated_image.png" alt="Compact air fryer">
+        <div class="card-body">
+          <h3>Compact Air Fryer</h3>
+          <p class="desc">Crispy food, little to no oil. Small enough for any countertop, big enough for real meals.</p>
+          <div class="price">$49.99<small>$75.00</small></div>
+          <a class="buy" href="checkout.html">Buy Now</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://media.base44.com/images/public/6abb9d8658ca4f3d10f85c7a/882db85cc_generated_image.png" alt="Single-serve coffee maker">
+        <div class="card-body">
+          <h3>Single-Serve Coffee Maker</h3>
+          <p class="desc">One button, one perfect cup, 90 seconds. Your café routine without the café line.</p>
+          <div class="price">$39.99<small>$60.00</small></div>
+          <a class="buy" href="checkout.html">Buy Now</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://media.base44.com/images/public/6abb9d8658ca4f3d10f85c7a/036aef219_generated_image.png" alt="Electric milk frother">
+        <div class="card-body">
+          <h3>Electric Milk Frother</h3>
+          <p class="desc">Barista-level foam in 20 seconds. Latte, cappuccino, matcha, all at home.</p>
+          <div class="price">$12.99<small>$22.00</small></div>
+          <a class="buy" href="checkout.html">Buy Now</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://media.base44.com/images/public/6abb9d8658ca4f3d10f85c7a/d73ad278c_generated_image.png" alt="Foldable travel kettle">
+        <div class="card-body">
+          <h3>Foldable Travel Kettle</h3>
+          <p class="desc">Collapses flat to fit in any bag. Hot water anywhere: office, road trip, hotel room.</p>
+          <div class="price">$34.99<small>$55.00</small></div>
+          <a class="buy" href="checkout.html">Buy Now</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="why-inner">
+      <div><h3>Fast US Shipping</h3><p>Every order ships free and arrives in 5 to 8 days.</p></div>
+      <div><h3>30-Day Returns</h3><p>Not feeling it? Send it back within 30 days, full refund.</p></div>
+      <div><h3>Secure Checkout</h3><p>Your order and your details are handled safely.</p></div>
+      <div><h3>Real Support</h3><p>Questions before or after you buy? We answer fast.</p></div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <h2>Upgrade your kitchen today</h2>
+    <p>Pick your gadget, check out in under a minute.</p>
+    <a class="btn" href="#products">Shop Bestsellers</a>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p>(c) 2026 GadgetGrub. All rights reserved.</p>
+    <p>Questions? Email <a href="mailto:">FILL IN your email</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
