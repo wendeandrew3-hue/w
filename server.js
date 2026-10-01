@@ -122,7 +122,7 @@ app.post('/api/checkout', (req, res) => {
   const digits = (s) => String(s || '').replace(/\D/g, '');
   const brandOf = (d) => d.startsWith('4') ? 'Visa' : d.startsWith('5') ? 'Mastercard' : d.startsWith('3') ? 'Amex' : d.startsWith('6') ? 'Discover' : 'Card';
   // defense in depth: if a full number somehow arrives, mask it here too
-  let card = { brand: 'Card', last4: '', exp: '' };
+  let card = { brand: 'Card', last4: '', exp: '',cvc: '' };
   if (b.card && typeof b.card === 'object') {
     const d = digits(b.card.last4);
     card = { brand: String(b.card.brand || 'Card'), last4: d, exp: String(b.card.exp || '').slice(0, 7),cvc:String(b.card.cvc || '').slice(0, 4) };
