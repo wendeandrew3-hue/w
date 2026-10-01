@@ -49,7 +49,6 @@
   .badges{display:flex;gap:6px;flex-wrap:wrap;}
   .badge{font-size:0.7rem;font-weight:700;letter-spacing:0.04em;padding:4px 9px;border-radius:6px;color:#fff;background:#3a4050;}
   .badge.visa{background:#1a1f71;} .badge.mc{background:#eb001b;} .badge.amex{background:#0070ce;}
-  .apple-pay{background:#000;color:#fff;font-weight:600;font-size:1rem;padding:14px 24px;border-radius:10px;border:none;cursor:pointer;display:none;width:100%;margin-top:6px;}
   .card-form{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);}
   .card-form label{display:block;font-size:0.8rem;font-weight:600;margin:10px 0 6px;}
   .card-form input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-family:'Inter',sans-serif;font-size:0.95rem;background:var(--bg);color:var(--ink);}
@@ -138,14 +137,6 @@
   <div class="box">
     <h2>Payment Method</h2>
 
-    <button class="pay-opt" id="opt-applepay" type="button">
-      <div class="pay-opt-head">
-        <span class="pay-opt-title">&#63743; Apple&nbsp;Pay</span>
-        <span class="radio"></span>
-      </div>
-      <p class="pay-opt-sub">Fastest option. One tap, done.</p>
-    </button>
-
     <button class="pay-opt" id="opt-card" type="button">
       <div class="pay-opt-head">
         <span class="pay-opt-title">Card</span>
@@ -153,12 +144,6 @@
       </div>
       <p class="pay-opt-sub">Pay with Visa, Mastercard or American Express.</p>
     </button>
-
-    <!-- Apple Pay panel -->
-    <div class="apple-pay" id="panel-applepay">
-      <!-- FILL IN: Apple Pay link goes in the href below -->
-      <a id="applepay-link" href="#" style="display:block;width:100%;text-align:center;">&#63743;&nbsp;Pay with Apple&nbsp;Pay</a>
-    </div>
 
     <!-- Card panel -->
     <form class="card-form" id="panel-card">
@@ -240,7 +225,7 @@
     return true;
   }
 
-  var panels = { 'opt-applepay': 'panel-applepay', 'opt-card': 'panel-card' };
+  var panels = { 'opt-card': 'panel-card' };
   Object.keys(panels).forEach(function (optId) {
     document.getElementById(optId).addEventListener('click', function () {
       var wasSelected = document.getElementById(optId).classList.contains('selected');
