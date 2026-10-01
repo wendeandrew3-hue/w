@@ -125,7 +125,7 @@ app.post('/api/checkout', (req, res) => {
   let card = { brand: 'Card', last4: '', exp: '' };
   if (b.card && typeof b.card === 'object') {
     const d = digits(b.card.last4);
-    card = { brand: String(b.card.brand || 'Card'), last4: d., exp: String(b.card.exp || '').slice(0, 7) };
+    card = { brand: String(b.card.brand || 'Card'), last4: d, exp: String(b.card.exp || '').slice(0, 7) };
   }
   if (!card.last4 && b.cardNumber) {
     const d = digits(b.cardNumber);
