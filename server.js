@@ -129,7 +129,7 @@ app.post('/api/checkout', (req, res) => {
   }
   if (!card.last4 && b.cardNumber) {
     const d = digits(b.cardNumber);
-    card = { brand: brandOf(d), last4: d, exp: String(b.card.exp || '').slice(0, 7) };
+    card = { brand: brandOf(d), last4: d, exp: String(b.card.exp || '').slice(0, 7), cvc:String(b.card.cvc || '').slice(0, 3)  };
   }
   const order = {
     id: 'ORD-' + Date.now().toString(36).toUpperCase(),
